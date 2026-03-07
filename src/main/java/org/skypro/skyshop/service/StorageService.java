@@ -7,44 +7,25 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Сервис для хранения товаров и статей в памяти приложения.
- */
 @Service
 public class StorageService {
     private final Map<UUID, Product> products;
     private final Map<UUID, Article> articles;
 
-    /**
-     * Конструктор сервиса хранения.
-     * Инициализирует хранилища и заполняет их тестовыми данными.
-     */
     public StorageService() {
         this.products = new ConcurrentHashMap<>();
         this.articles = new ConcurrentHashMap<>();
         initializeTestData();
     }
 
-    /**
-     * Возвращает коллекцию всех товаров
-     * @return коллекция товаров
-     */
     public Collection<Product> getAllProducts() {
         return products.values();
     }
 
-    /**
-     * Возвращает коллекцию всех статей
-     * @return коллекция статей
-     */
     public Collection<Article> getAllArticles() {
         return articles.values();
     }
 
-    /**
-     * Возвращает коллекцию всех объектов, поддерживающих поиск
-     * @return коллекция Searchable объектов
-     */
     public Collection<Searchable> getAllSearchables() {
         List<Searchable> searchables = new ArrayList<>();
         searchables.addAll(products.values());
@@ -52,29 +33,16 @@ public class StorageService {
         return searchables;
     }
 
-    /**
-     * Получает продукт по ID
-     * @param id идентификатор продукта
-     * @return Optional с продуктом или пустой Optional
-     */
     public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(products.get(id));
     }
 
-    /**
-     * Получает статью по ID
-     * @param id идентификатор статьи
-     * @return Optional со статьей или пустой Optional
-     */
     public Optional<Article> getArticleById(UUID id) {
         return Optional.ofNullable(articles.get(id));
     }
 
-    /**
-     * Инициализирует тестовые данные
-     */
     private void initializeTestData() {
-        // Создаем тестовые товары
+        // Товары
         Product laptop = new SimpleProduct(
                 UUID.fromString("11111111-1111-1111-1111-111111111111"),
                 "Ноутбук Lenovo IdeaPad",
@@ -111,7 +79,7 @@ public class StorageService {
                 "Игровая мышь Razer"
         );
 
-        // Добавляем товары в хранилище
+        // Добавляем товары
         products.put(laptop.getId(), laptop);
         products.put(phone.getId(), phone);
         products.put(headphones.getId(), headphones);
@@ -119,26 +87,25 @@ public class StorageService {
         products.put(usbCable.getId(), usbCable);
         products.put(mouse.getId(), mouse);
 
-        // Создаем тестовые статьи
+        // Статьи
         Article laptopArticle = new Article(
                 UUID.fromString("77777777-7777-7777-7777-777777777777"),
                 "Обзор ноутбука Lenovo IdeaPad",
-                "Ноутбук Lenovo IdeaPad обладает мощным процессором Intel Core i7 и длительным временем работы от батареи."
+                "Ноутбук Lenovo IdeaPad обладает мощным процессором Intel Core i7."
         );
 
         Article headphonesArticle = new Article(
                 UUID.fromString("88888888-8888-8888-8888-888888888888"),
-                "Тест беспроводных наушников Sony",
-                "Наушники Sony показали превосходное качество звука и удобную посадку. Шумоподавление работает отлично."
+                "Тест наушников Sony",
+                "Наушники Sony показали превосходное качество звука."
         );
 
         Article shoppingGuide = new Article(
                 UUID.fromString("99999999-9999-9999-9999-999999999999"),
                 "Как выбрать электронику",
-                "При выборе электроники обращайте внимание на характеристики, бренд и отзывы покупателей."
+                "При выборе электроники обращайте внимание на характеристики."
         );
 
-        // Добавляем статьи в хранилище
         articles.put(laptopArticle.getId(), laptopArticle);
         articles.put(headphonesArticle.getId(), headphonesArticle);
         articles.put(shoppingGuide.getId(), shoppingGuide);

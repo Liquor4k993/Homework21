@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.UUID;
 
-/**
- * Контроллер для работы с интернет-магазином.
- * Предоставляет REST API для доступа к товарам, статьям, поиску и корзине.
- */
 @RestController
 @RequestMapping("/api")
 public class ShopController {
@@ -22,12 +18,6 @@ public class ShopController {
     private final SearchService searchService;
     private final BasketService basketService;
 
-    /**
-     * Конструктор контроллера
-     * @param storageService сервис хранения
-     * @param searchService сервис поиска
-     * @param basketService сервис корзины
-     */
     public ShopController(
             StorageService storageService,
             SearchService searchService,
@@ -37,49 +27,27 @@ public class ShopController {
         this.basketService = basketService;
     }
 
-    /**
-     * Возвращает все товары
-     * @return коллекция товаров
-     */
     @GetMapping("/products")
     public Collection<Product> getAllProducts() {
         return storageService.getAllProducts();
     }
 
-    /**
-     * Возвращает все статьи
-     * @return коллекция статей
-     */
     @GetMapping("/articles")
     public Collection<Article> getAllArticles() {
         return storageService.getAllArticles();
     }
 
-    /**
-     * Выполняет поиск по товарам и статьям
-     * @param pattern строка для поиска
-     * @return коллекция результатов поиска
-     */
     @GetMapping("/search")
     public Collection<SearchResult> search(@RequestParam String pattern) {
         return searchService.search(pattern);
     }
 
-    /**
-     * Добавляет продукт в корзину
-     * @param id идентификатор продукта
-     * @return сообщение об успешном добавлении
-     */
     @GetMapping("/basket/{id}")
     public String addProductToBasket(@PathVariable("id") UUID id) {
         basketService.addProductToBasket(id);
         return "Продукт успешно добавлен";
     }
 
-    /**
-     * Возвращает содержимое корзины пользователя
-     * @return корзина пользователя
-     */
     @GetMapping("/basket")
     public UserBasket getUserBasket() {
         return basketService.getUserBasket();
